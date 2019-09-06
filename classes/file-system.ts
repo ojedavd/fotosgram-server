@@ -2,6 +2,7 @@ import { FileUpload } from '../interfaces/file-upload';
 
 import path from 'path';
 import fs from 'fs';
+import uniqid from 'uniqid';
 
 export default class FyleSystem {
     
@@ -11,8 +12,24 @@ export default class FyleSystem {
 
     guardarImagenTemporal( file: FileUpload, userId: string ) {
 
+        // crear carpetas
         const path = this.crearCarpetaUsuario( userId );
 
+        // nombre archivo
+        const nombreArchivo = this.generarNombreUnico( file.name );
+        console.log( file.name );
+        console.log( nombreArchivo );
+
+    }
+
+    private generarNombreUnico( nombreOriginal: string ) {
+
+        const nombreArr = nombreOriginal.split('.');
+        const extension = nombreArr[ nombreArr.length - 1 ];
+
+        const idUnico = uniqid();
+
+        return `${ idUnico }.${ extension }`;
     }
 
     private crearCarpetaUsuario( userId: string ) {
