@@ -7,12 +7,14 @@ const server_1 = __importDefault(require("./classes/server"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const post_1 = __importDefault(require("./routes/post"));
 const server = new server_1.default();
 // body parser 
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 // rutas de mi app
 server.app.use('/user', usuario_1.default);
+server.app.use('/posts', post_1.default);
 // conectar DB
 mongoose_1.default.connect('mongodb://localhost:27017/fotosgram', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err)
