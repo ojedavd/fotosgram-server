@@ -2,8 +2,10 @@ import { Router, Request, Response } from 'express';
 import { verificaToken } from '../middlewares/autenticacion';
 import { Post } from '../models/post.model';
 import { FileUpload } from '../interfaces/file-upload';
+import FyleSystem from '../classes/file-system';
 
 const postRoutes = Router();
+const fileSystem = new FyleSystem();
 
 // obtener posts paginados
 postRoutes.get('/', async (req: any, res: Response) => {
@@ -73,8 +75,10 @@ postRoutes.post('/upload', [verificaToken], (req: any, res: Response) => {
         });
     }
 
+    fileSystem.guardarImagenTemporal( file, req.usuario._id );
+
     res.json({
-        ok: false,
+        ok: true,
         file: file.mimetype
     });
 });
