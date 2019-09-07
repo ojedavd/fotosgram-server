@@ -50,7 +50,7 @@ postRoutes.post('/', [autenticacion_1.verificaToken], (req, res) => {
     });
 });
 // servicio para subir archivos
-postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => {
+postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.files) {
         return res.status(400).json({
             ok: false,
@@ -70,10 +70,10 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => {
             mensaje: 'Lo que subio no es una imagen'
         });
     }
-    fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    yield fileSystem.guardarImagenTemporal(file, req.usuario._id);
     res.json({
         ok: true,
         file: file.mimetype
     });
-});
+}));
 exports.default = postRoutes;

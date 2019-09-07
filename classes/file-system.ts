@@ -3,6 +3,8 @@ import { FileUpload } from '../interfaces/file-upload';
 import path from 'path';
 import fs from 'fs';
 import uniqid from 'uniqid';
+import { resolve } from 'url';
+import { rejects } from 'assert';
 
 export default class FyleSystem {
     
@@ -12,13 +14,25 @@ export default class FyleSystem {
 
     guardarImagenTemporal( file: FileUpload, userId: string ) {
 
-        // crear carpetas
-        const path = this.crearCarpetaUsuario( userId );
+        return new Promise( (resolve, reject) => {
+            
+            // crear carpetas
+            const path = this.crearCarpetaUsuario( userId );
 
-        // nombre archivo
-        const nombreArchivo = this.generarNombreUnico( file.name );
-        console.log( file.name );
-        console.log( nombreArchivo );
+            // nombre archivo
+            const nombreArchivo = this.generarNombreUnico( file.name );
+            
+            // mover el archivo del temp a nuestra carpeta
+            file.mv( `${ path}/${ nombreArchivo }`, (err: any) =>{
+
+                if ( err ) {
+                    reject(err);
+                } else {
+                    resolve( );
+                }
+            });
+
+        });
 
     }
 

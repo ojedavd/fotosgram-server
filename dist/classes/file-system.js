@@ -10,12 +10,21 @@ class FyleSystem {
     constructor() {
     }
     guardarImagenTemporal(file, userId) {
-        // crear carpetas
-        const path = this.crearCarpetaUsuario(userId);
-        // nombre archivo
-        const nombreArchivo = this.generarNombreUnico(file.name);
-        console.log(file.name);
-        console.log(nombreArchivo);
+        return new Promise((resolve, reject) => {
+            // crear carpetas
+            const path = this.crearCarpetaUsuario(userId);
+            // nombre archivo
+            const nombreArchivo = this.generarNombreUnico(file.name);
+            // mover el archivo del temp a nuestra carpeta
+            file.mv(`${path}/${nombreArchivo}`, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
     }
     generarNombreUnico(nombreOriginal) {
         const nombreArr = nombreOriginal.split('.');
