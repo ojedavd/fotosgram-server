@@ -62,5 +62,15 @@ class FyleSystem {
         const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userId, 'temp');
         return fs_1.default.readdirSync(pathTemp) || [];
     }
+    getFotoUrl(userId, img) {
+        // Path POSTs
+        const pathFoto = path_1.default.resolve(__dirname, '../uploads', userId, 'posts', img);
+        // Si la imagen existe
+        const existe = fs_1.default.existsSync(pathFoto);
+        if (!existe) {
+            return path_1.default.resolve(__dirname, '../assets/400x250.jpg');
+        }
+        return pathFoto;
+    }
 }
 exports.default = FyleSystem;
